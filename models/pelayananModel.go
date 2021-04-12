@@ -32,3 +32,24 @@ type FormIsian struct{
 	Jam_kedatangan string `json:"jamKedatangan"`
 	Id_pelayanan int `json:"idPelayanan"`
 }
+
+
+type ResponseGA struct {
+	Status  int             `json:"status"`
+	Message string          `json:"messages"`
+	Data    GetAntrian `json:"data"`
+}
+
+type GetAntrian struct {
+	ID int `json:"ID"`
+	Nama_lengkap string `json:"namaLengkap"`
+	No_identitas string `json:"noIdentitas"`
+	Jenis_kelamin string `json:"jenisKelamin"`
+	Alamat string `json:"alamat"`
+	Email string `json:"email"`
+	No_hp string `json:"noHp"`
+	Tanggal_kedatangan *time.Time `json:"tanggalKedatangan"`
+	Jam_kedatangan string `json:"jamKedatangan"`
+	Id_pelayanan int `json:"idPelayanan"`
+	Pelayanan string `json:"pelayanan"`
+}

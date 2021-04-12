@@ -34,6 +34,7 @@ func main(){
 		p := r.Group("v1/api/nano")
 		{
 			p.GET("/pelayanan", pController.GetPelayanan)
+			p.GET("/getAntrian", pController.GetAntrian)
 			p.POST("/createAntrian", pController.CreateAntrian)
 		}
 		r.Use(cors.New(cors.Config{

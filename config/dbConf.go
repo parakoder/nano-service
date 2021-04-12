@@ -30,13 +30,13 @@ func ConnectSQL() (*DB, error) {
 	hostPort := os.Getenv("PORT")
 
 	// pgConnStrings := fmt.Sprintf("port=%s host=%s user=%s "+"password=%s dbname=%s sslmode=disable", hostPort, hostName, userName, password, dbName)
-	url := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v",
+	url := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?parseTime=true",
 		userName,
 		password,
 		hostName,
 		hostPort,
 		dbName)
-	log.Println("TESS ", url)
+	// log.Println("TESS ", url)
 	d, err := sqlx.Connect("mysql", url)
 	if err != nil {
 		panic(err)

@@ -76,3 +76,13 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian)error {
 	}
 	return nil
 }
+
+func (m *mySQLNano) GetAntrian(id int) (models.GetAntrian, error) {
+	var f models.GetAntrian
+	err := m.Conn.Get(&f, `SELECT t.*, p.nama as pelayanan FROM tran_form_isian t left join mst_pelayanan p on p.id = t.id_pelayanan WHERE t.id = ?`, id)
+	if err != nil {
+		log.Panicln(err)
+		return f, err
+	}
+	return f, nil
+}
