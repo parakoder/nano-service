@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"nano-service/config"
+	handler "nano-service/handlers"
 	"nano-service/models"
 	"nano-service/repository"
 	"nano-service/repository/implRepo"
@@ -36,4 +37,32 @@ func (p *NanoRepo) GetPelayanan(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(c.Writer).Encode(responses)
+}
+
+func (n *NanoRepo) CreateAntrian(c *gin.Context) {
+	c.Header("Access-Control-Allow-Headers", "Content-type")
+	c.Header("Access-Control-Allow-Method", "POST, GET, OPTIONS, PUT, DELETE")
+	c.Header("Access-Control-Allow-Origin", "*")
+	var form models.FormIsian
+	errBind := c.BindJSON(&form)
+	if errBind != nil {
+		c.AbortWithStatusJSON(c.Writer.Status(), handler.ErrorHandler(c.Writer.Status(), 404, errBind.Error()))
+		log.Panicln(errBind.Error())
+		return
+	}
+
+	err := n.repo.CreateAntrian(form)
+	if err != nil {
+		c.AbortWithStatusJSON(400, handler.ErrorHandler(400, 404, err.Error()))
+		log.Panicln(err)
+		return
+	}
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, gin.H{
+		"status":     200,
+		"message_id": "Suskes menambahkan Business Field",
+		"message_en": "Successfull add Business Field",
+	})
+
 }
