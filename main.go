@@ -35,6 +35,7 @@ func main(){
 		{
 			p.GET("/pelayanan", pController.GetPelayanan)
 			p.GET("/getAntrian", pController.GetAntrian)
+			p.GET("/getPDF", pController.DownloadPdf)
 			p.POST("/createAntrian", pController.CreateAntrian)
 		}
 		r.Use(cors.New(cors.Config{
