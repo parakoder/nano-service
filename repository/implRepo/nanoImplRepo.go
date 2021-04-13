@@ -1,6 +1,7 @@
 package implRepo
 
 import (
+	"errors"
 	"log"
 	"nano-service/models"
 	repo "nano-service/repository"
@@ -52,10 +53,28 @@ func (m *mySQLNano) GetPelayanan() ([]models.Pelayanan, error) {
 	return arrP, nil
 }
 
-func (m *mySQLNano) CreateAntrian(f models.FormIsian)error {
+func (m *mySQLNano) CekAntrian(jk int) bool {
+	var totalJam int
+	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan >= CURRENT_DATE() and jam_kedatangan = ?`, jk)
+	log.Println("data ", totalJam)
+	if err1 != nil {
+		log.Panicln(err1)
+	}
+
+	if totalJam > 5 {
+		return true
+	}
+	return false
+
+}
+
+func (m *mySQLNano) CreateAntrian(f models.FormIsian) error {
 	dt := time.Now()
 	dates := dt.Format("2006.01.02 15:04:05")
-
+	cek := m.CekAntrian(f.Jam_kedatangan)
+	if cek == true {
+		return errors.New("Antrian Sudah full")
+	}
 	log.Println("tanggal ", dt )
 	_, err := m.Conn.NamedQuery(`INSERT INTO tran_form_isian
 	(nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan)
