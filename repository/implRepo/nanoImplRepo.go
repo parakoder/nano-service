@@ -75,23 +75,13 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) error {
 	if cek == true {
 		return errors.New("Antrian Sudah full")
 	}
-	log.Println("tanggal ", dt )
-	_, err := m.Conn.NamedQuery(`INSERT INTO tran_form_isian
-	(nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan)
-	VALUES(:nl, :ni, :jk, :almt, :email, :nh, :tk, :jkd, :idp)`, map[string]interface{}{
-		"nl" : f.Nama_lengkap,
-		"ni" : f.No_identitas,
-		"jk" : f.Jenis_kelamin,
-		"almt" : f.Alamat,
-		"email" : f.Email,
-		"nh" : f.No_hp,
-		"tk" : dates,
-		"jkd" : f.Jam_kedatangan,
-		"idp" : f.Id_pelayanan,
-	})
-	if err != nil {
-		log.Panicln(err)
-		return err
+
+	ca := `INSERT INTO tran_form_isian
+	(nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	err := m.Conn.MustExec(ca, f.Nama_lengkap, f.No_identitas, f.Jenis_kelamin, f.Alamat, f.Email, f.No_hp, dates, f.Jam_kedatangan, f.Id_pelayanan)
+
+	if err == nil {
+		return errors.New("Error ketika create antrian")
 	}
 	return nil
 }
