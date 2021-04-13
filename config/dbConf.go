@@ -39,6 +39,7 @@ func ConnectSQL() (*DB, error) {
 	// log.Println("TESS ", url)
 	d, err := sqlx.Connect("mysql", url)
 	if err != nil {
+		log.Println("DATA ", err)
 		panic(err)
 	}
 	d.SetMaxIdleConns(10)
