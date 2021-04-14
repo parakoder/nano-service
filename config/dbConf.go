@@ -28,7 +28,7 @@ func ConnectSQL() (*DB, error) {
 	password := os.Getenv("PASS")
 	hostName := os.Getenv("HOST")
 	userName := os.Getenv("USER_DB")
-	hostPort := os.Getenv("PORT")
+	hostPort := os.Getenv("DB_PORT")
 
 	// pgConnStrings := fmt.Sprintf("port=%s host=%s user=%s "+"password=%s dbname=%s sslmode=disable", hostPort, hostName, userName, password, dbName)
 	url := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
