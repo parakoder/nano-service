@@ -35,7 +35,7 @@ func (m *mySQLNano) GetPelayanan() ([]models.Pelayanan, error) {
 		if errScan != nil {
 			return nil, err
 		}
-		qD, errD := m.Conn.Queryx(`SELECT value_detail FROM mst_detail_pelayanan WHERE id_pelayanan =?`, p.ID)
+		qD, errD := m.Conn.Queryx(`SELECT value_detail FROM mst_detail_pelayanan WHERE id_pelayanan =$1`, p.ID)
 		if errD != nil {
 			return nil, errD
 		}
@@ -55,7 +55,7 @@ func (m *mySQLNano) GetPelayanan() ([]models.Pelayanan, error) {
 
 func (m *mySQLNano) CekAntrian(jk int) bool {
 	var totalJam int
-	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan >= CURRENT_DATE() and jam_kedatangan = ?`, jk)
+	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan >= CURRENT_DATE and jam_kedatangan = $1`, jk)
 	log.Println("data ", totalJam)
 	if err1 != nil {
 		log.Panicln(err1)
@@ -71,13 +71,12 @@ func (m *mySQLNano) CekAntrian(jk int) bool {
 func (m *mySQLNano) CreateAntrian(f models.FormIsian) error {
 	dt := time.Now()
 	dates := dt.Format("2006.01.02 15:04:05")
-	cek := m.CekAntrian(f.Jam_kedatangan)
-	if cek == true {
-		return errors.New("Antrian Sudah full")
-	}
+	// cek := m.CekAntrian(f.Jam_kedatangan)
+	// if cek == true {
+	// 	return errors.New("Antrian Sudah full")
+	// }
 
-	ca := `INSERT INTO tran_form_isian
-	(nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	ca := `INSERT INTO tran_form_isian (nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`
 	err := m.Conn.MustExec(ca, f.Nama_lengkap, f.No_identitas, f.Jenis_kelamin, f.Alamat, f.Email, f.No_hp, dates, f.Jam_kedatangan, f.Id_pelayanan)
 
 	if err == nil {
@@ -88,7 +87,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) error {
 
 func (m *mySQLNano) GetAntrian(id int) (models.GetAntrian, error) {
 	var f models.GetAntrian
-	err := m.Conn.Get(&f, `SELECT t.*, p.nama as pelayanan FROM tran_form_isian t left join mst_pelayanan p on p.id = t.id_pelayanan WHERE t.id = ?`, id)
+	err := m.Conn.Get(&f, `SELECT t.*, p.nama as pelayanan FROM tran_form_isian t left join mst_pelayanan p on p.id = t.id_pelayanan WHERE t.id = $1`, id)
 	if err != nil {
 		log.Panicln(err)
 		return f, err
@@ -98,7 +97,7 @@ func (m *mySQLNano) GetAntrian(id int) (models.GetAntrian, error) {
 
 func (m *mySQLNano) GetPDF(id int)(models.GetAntrian, error) {
 	var f models.GetAntrian
-	err := m.Conn.Get(&f, `SELECT t.*, p.nama as pelayanan FROM tran_form_isian t left join mst_pelayanan p on p.id = t.id_pelayanan WHERE t.id = ?`, id)
+	err := m.Conn.Get(&f, `SELECT t.*, p.nama as pelayanan FROM tran_form_isian t left join mst_pelayanan p on p.id = t.id_pelayanan WHERE t.id = $1`, id)
 	if err != nil {
 		log.Panicln(err)
 		return f, err

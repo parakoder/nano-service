@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
-	_ "github.com/go-sql-driver/mysql"
+	// _ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 type DB struct {
@@ -17,7 +19,6 @@ type DB struct {
 var dbConn = &DB{}
 
 func ConnectSQL() (*DB, error) {
-
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -30,21 +31,23 @@ func ConnectSQL() (*DB, error) {
 	hostPort := os.Getenv("PORT")
 
 	// pgConnStrings := fmt.Sprintf("port=%s host=%s user=%s "+"password=%s dbname=%s sslmode=disable", hostPort, hostName, userName, password, dbName)
-	url := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?parseTime=true",
+	url := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
 		userName,
 		password,
 		hostName,
 		hostPort,
 		dbName)
-	// log.Println("TESS ", url)
-	d, err := sqlx.Connect("mysql", url)
+
+	d, err := sqlx.Open("postgres", url)
+	// defer d.Close()
 	if err != nil {
-		log.Println("DATA ", err)
 		panic(err)
 	}
-	d.SetMaxIdleConns(10)
-	d.SetMaxOpenConns(10)
+	d.SetMaxOpenConns(25)
+	d.SetMaxIdleConns(25)
+	d.SetConnMaxLifetime(5*time.Minute)
 
 	dbConn.SQL = d
+	
 	return dbConn, err
 }
