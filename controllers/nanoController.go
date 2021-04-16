@@ -92,6 +92,32 @@ func (n *NanoRepo) GetAntrian(c *gin.Context) {
 
 }
 
+func (n *NanoRepo) CekAntrian(c *gin.Context) {
+	c.Header("Access-Control-Allow-Headers", "Content-type")
+	c.Header("Access-Control-Allow-Method", "POST, GET, OPTIONS, PUT, DELETE")
+	c.Header("Access-Control-Allow-Origin", "*")
+	tk := c.Query("tanggalKedatangan")
+	jk := c.Query("jamKedatangan")
+	idp := c.Query("idPelayanan")
+	j, _ := strconv.Atoi(jk)
+	i, _ := strconv.Atoi(idp)
+
+	cek := n.repo.CekAntrian(tk, j, i)
+	if cek == true {
+		c.AbortWithStatusJSON(400, handler.ErrorHandler(400, 404, "maaf antrian penuh"))
+		// log.Panicln(err)
+		return
+	}
+	getJam, _ := n.repo.GetAvailJam(tk,i)
+
+	c.JSON(200, gin.H{
+		"status":     200,
+		"message_id": "Suskes antrian masih kosong",
+		"antrian" : getJam,
+	})
+
+}
+
 func (n *NanoRepo) DownloadPdf(c *gin.Context) {
 	c.Header("Access-Control-Allow-Headers", "Content-type")
 	c.Header("Access-Control-Allow-Method", "POST, GET, OPTIONS, PUT, DELETE")

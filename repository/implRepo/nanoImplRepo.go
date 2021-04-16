@@ -53,12 +53,13 @@ func (m *mySQLNano) GetPelayanan() ([]models.Pelayanan, error) {
 	return arrP, nil
 }
 
-func (m *mySQLNano) CekAntrian(jk int) bool {
+func (m *mySQLNano) CekAntrian(tk string,jk int, idp int) bool {
 	var totalJam int
-	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan >= CURRENT_DATE and jam_kedatangan = $1`, jk)
+	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan = $1 and jam_kedatangan = $2 and id_pelayanan=$3`,tk, jk, idp)
 	log.Println("data ", totalJam)
 	if err1 != nil {
 		log.Panicln(err1)
+		return true
 	}
 
 	if totalJam > 5 {
@@ -83,6 +84,58 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) error {
 		return errors.New("Error ketika create antrian")
 	}
 	return nil
+}
+
+func (m mySQLNano)GetAvailJam(tk string, idp int) ([]int, error){
+	var (
+		jam1 int
+		jam2 int
+		jam3 int
+		jam4 int
+		jam5 int
+	)
+	var arrJam []int
+	err := m.Conn.Get(&jam1,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =1 and id_pelayanan = $2`, tk, idp)
+	if err != nil {
+		log.Panicln(err)
+	}
+	if jam1 < 5 {
+		arrJam = append(arrJam, 1)
+	}
+
+	err2 := m.Conn.Get(&jam2,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =2 and id_pelayanan = $2`, tk, idp)
+	if err != nil {
+		log.Panicln(err2)
+	}
+	if jam2 < 5 {
+		arrJam = append(arrJam, 2)
+	}
+
+	err3 := m.Conn.Get(&jam3,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =3 and id_pelayanan = $2`, tk, idp)
+	if err3 != nil {
+		log.Panicln(err3)
+	}
+	if jam3 < 5 {
+		arrJam = append(arrJam, 3)
+	}
+
+
+	err4 := m.Conn.Get(&jam4,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =4 and id_pelayanan = $2`, tk, idp)
+	if err4 != nil {
+		log.Panicln(err4)
+	}
+	if jam4 < 5 {
+		arrJam = append(arrJam, 4)
+	}
+	err5 := m.Conn.Get(&jam5,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =5 and id_pelayanan = $2`, tk, idp)
+	if err5 != nil {
+		log.Panicln(err5)
+	}
+	if jam5 < 5 {
+		arrJam = append(arrJam, 5)
+	}
+	return arrJam, nil 
+	
 }
 
 func (m *mySQLNano) GetAntrian(id int) (models.GetAntrian, error) {

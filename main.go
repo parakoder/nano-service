@@ -37,6 +37,7 @@ func main(){
 			p.GET("/getAntrian", pController.GetAntrian)
 			p.GET("/getPDF", pController.DownloadPdf)
 			p.POST("/createAntrian", pController.CreateAntrian)
+			p.POST("/cekAntrian", pController.CekAntrian)
 		}
 		r.Use(cors.New(cors.Config{
 			AllowOrigins:     []string{"*"},
