@@ -101,20 +101,20 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 	idp := c.Query("idPelayanan")
 	j, _ := strconv.Atoi(jk)
 	i, _ := strconv.Atoi(idp)
+	var responses models.ResponseCekAntrian
+	var cekD models.CekAntrian
+
 
 	cek := n.repo.CekAntrian(tk, j, i)
-	if cek == true {
-		c.AbortWithStatusJSON(400, handler.ErrorHandler(400, 404, "maaf antrian penuh"))
-		// log.Panicln(err)
-		return
-	}
-	getJam, _ := n.repo.GetAvailJam(tk,i)
-
-	c.JSON(200, gin.H{
-		"status":     200,
-		"message_id": "Suskes antrian masih kosong",
-		"antrian" : getJam,
-	})
+	
+	cekD.IsAvailable = cek
+	cekD.AvailableTime = n.repo.GetAvailJam(tk,i)
+	responses.Status = 200
+	responses.Message = "Success"
+	responses.Data = cekD
+	c.Header("Content-Type", "application/json")
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	json.NewEncoder(c.Writer).Encode(responses)
 
 }
 

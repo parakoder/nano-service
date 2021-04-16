@@ -14,6 +14,17 @@ type Pelayanan struct {
 	Description []string `json:"description"`
 }
 
+type ResponseCekAntrian struct {
+	Status int `json:"status"`
+	Message string `json:"message"`
+	Data CekAntrian `json:"data"`
+}
+
+type CekAntrian struct {
+	IsAvailable bool `json:"isAvailable"`
+	AvailableTime []int `json:"availableTime"`
+}
+
 
 type DetailPelayanan struct {
 	ID int `json:"id"`

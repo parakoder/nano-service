@@ -13,7 +13,7 @@ import (
 )
 
 func main(){
-	if err := godotenv.Load(".env.dev"); err != nil {
+	if err := godotenv.Load(".env"); err != nil {
 		panic(".env not exists")
 	} else {
 
@@ -37,7 +37,7 @@ func main(){
 			p.GET("/getAntrian", pController.GetAntrian)
 			p.GET("/getPDF", pController.DownloadPdf)
 			p.POST("/createAntrian", pController.CreateAntrian)
-			p.POST("/cekAntrian", pController.CekAntrian)
+			p.GET("/cekAntrian", pController.CekAntrian)
 		}
 		r.Use(cors.New(cors.Config{
 			AllowOrigins:     []string{"*"},

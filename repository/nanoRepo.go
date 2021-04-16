@@ -8,6 +8,6 @@ type Nano interface {
 	CreateAntrian(models.FormIsian)(error)
 	GetAntrian(id int)(models.GetAntrian, error)
 	CekAntrian(tk string, jkd int, idp int) bool
-	GetAvailJam(tk string, idp int) ([]int, error)
+	GetAvailJam(tk string, idp int) []int
 	GetPDF(id int)(models.GetAntrian, error)
 }

@@ -55,17 +55,17 @@ func (m *mySQLNano) GetPelayanan() ([]models.Pelayanan, error) {
 
 func (m *mySQLNano) CekAntrian(tk string,jk int, idp int) bool {
 	var totalJam int
-	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan = $1 and jam_kedatangan = $2 and id_pelayanan=$3`,tk, jk, idp)
-	log.Println("data ", totalJam)
+	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan = $2 and id_pelayanan=$3`,tk, jk, idp)
+	// log.Println("data ", totalJam)
 	if err1 != nil {
 		log.Panicln(err1)
 		return true
 	}
-
-	if totalJam > 5 {
-		return true
+// log.Println("DATA ", totalJam)
+	if totalJam >= 5 {
+		return false
 	}
-	return false
+	return true
 
 }
 
@@ -86,7 +86,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) error {
 	return nil
 }
 
-func (m mySQLNano)GetAvailJam(tk string, idp int) ([]int, error){
+func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 	var (
 		jam1 int
 		jam2 int
@@ -134,7 +134,7 @@ func (m mySQLNano)GetAvailJam(tk string, idp int) ([]int, error){
 	if jam5 < 5 {
 		arrJam = append(arrJam, 5)
 	}
-	return arrJam, nil 
+	return arrJam
 	
 }
 
