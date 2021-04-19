@@ -39,7 +39,7 @@ type FormIsian struct{
 	Alamat string `json:"alamat"`
 	Email string `json:"email"`
 	No_hp string `json:"noHp"`
-	Tanggal_kedatangan time.Time `json:"tanggalKedatangan"`
+	Tanggal_kedatangan *time.Time `json:"tanggalKedatangan"`
 	Jam_kedatangan int `json:"jamKedatangan"`
 	Id_pelayanan int `json:"idPelayanan"`
 }
@@ -60,7 +60,7 @@ type GetAntrian struct {
 	Email string `json:"email"`
 	No_hp string `json:"noHp"`
 	Tanggal_kedatangan *time.Time `json:"tanggalKedatangan"`
-	Jam_kedatangan int `json:"jamKedatangan"`
+	Jam_kedatangan *int `json:"jamKedatangan"`
 	Id_pelayanan int `json:"idPelayanan"`
 	Pelayanan string `json:"pelayanan"`
 	No_Pelayanan string `json:"noPelayanan"`
