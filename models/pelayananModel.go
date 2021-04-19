@@ -63,4 +63,5 @@ type GetAntrian struct {
 	Jam_kedatangan int `json:"jamKedatangan"`
 	Id_pelayanan int `json:"idPelayanan"`
 	Pelayanan string `json:"pelayanan"`
+	No_Pelayanan string `json:"noPelayanan"`
 }

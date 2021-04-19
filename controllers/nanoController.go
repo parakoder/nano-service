@@ -53,7 +53,7 @@ func (n *NanoRepo) CreateAntrian(c *gin.Context) {
 		return
 	}
 
-	err := n.repo.CreateAntrian(form)
+	idAnt, err := n.repo.CreateAntrian(form)
 	if err != nil {
 		c.AbortWithStatusJSON(400, handler.ErrorHandler(400, 404, err.Error()))
 		log.Panicln(err)
@@ -64,6 +64,7 @@ func (n *NanoRepo) CreateAntrian(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"status":     200,
 		"message_id": "Suskes membuat antrian baru",
+		"antiranID" : idAnt,
 	})
 
 }
