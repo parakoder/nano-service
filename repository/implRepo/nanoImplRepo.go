@@ -29,7 +29,7 @@ func NewSQLNano(Conn *sqlx.DB) repo.Nano {
 func (m *mySQLNano) GetPelayanan() ([]models.Pelayanan, error) {
 	var arrP []models.Pelayanan
 	
-	q, err := m.Conn.Queryx(`SELECT * FROM mst_pelayanan`)
+	q, err := m.Conn.Queryx(`SELECT * FROM mst_pelayanan ORDER BY id ASC`)
 	if err != nil {
 		return nil, err
 	}
