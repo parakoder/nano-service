@@ -63,8 +63,8 @@ func (n *NanoRepo) CreateAntrian(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, gin.H{
 		"status":     200,
-		"message_id": "Suskes membuat antrian baru",
-		"antiranID" : idAnt,
+		"message": "Suskes membuat antrian baru",
+		"antrianID" : idAnt,
 	})
 
 }
