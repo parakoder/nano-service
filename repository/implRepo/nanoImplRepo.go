@@ -3,6 +3,7 @@ package implRepo
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -34,12 +35,12 @@ func (m *mySQLNano) GetPelayanan() ([]models.Pelayanan, error) {
 	}
 	
 	for q.Next() {
-		
 		var p models.Pelayanan
 		errScan := q.StructScan(&p)
 		if errScan != nil {
 			return nil, err
 		}
+
 		qD, errD := m.Conn.Queryx(`SELECT value_detail FROM mst_detail_pelayanan WHERE id_pelayanan =$1`, p.ID)
 		if errD != nil {
 			return nil, errD
@@ -72,7 +73,7 @@ func (m *mySQLNano) CekAntrian(tk string,jk int, idp int) bool {
 
 }
 
-func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan time.Time) string {
+func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string)(string, error) {
 	var jamK int
 	var noAtrian string
 	switch idp {
@@ -82,11 +83,40 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan time.Time) string 
 		log.Panicln(err)
 	}
 
-	log.Println("JAMMM ", jamK)
-
 	noAtrian = fmt.Sprintf("%s%d", "A", jamK +1)
+
+	case 2 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2`, tgl_kedatangan, idp)
+	if err != nil {
+		log.Panicln(err)
 	}
-	return noAtrian
+
+	noAtrian = fmt.Sprintf("%s%d", "B", jamK +1)
+
+	case 3 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2`, tgl_kedatangan, idp)
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	noAtrian = fmt.Sprintf("%s%d", "C", jamK +1)
+
+	case 4 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2`, tgl_kedatangan, idp)
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	noAtrian = fmt.Sprintf("%s%d", "D", jamK +1)
+
+	
+
+	}
+	log.Println("JAM ", jamK)
+	if jamK > 19 {
+		return "", errors.New("Antrian Sudah Penuh untuk hari ini")
+	}
+	return noAtrian, nil
 }
 
 type ErrorBody struct {
@@ -107,7 +137,10 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
 	// log.Println("ID return ", r)
 	var id int
 	var rm models.GetAntrian
-	noAntrain := m.GenerateNoAntrian(f.Id_pelayanan, f.Tanggal_kedatangan)
+	noAntrain, errAnt := m.GenerateNoAntrian(f.Id_pelayanan, f.Tanggal_kedatangan)
+	if errAnt != nil {
+		return 0, errAnt
+	}
 	fmt.Println("NO ANTRIAN ", noAntrain)
 
 	row, err := m.Conn.NamedQuery(`INSERT INTO tran_form_isian (nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian) 
@@ -133,7 +166,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
 	jadwal := rm.Tanggal_kedatangan.Format("2006-01-02")
 	log.Println("TANGGAL ", jadwal)
 	var jamKdtng string
-	switch rm.Jam_kedatangan {
+	switch *rm.Jam_kedatangan {
 	case 1 : 
 		jamKdtng = "09.00 WIB"
 	case 2 :
@@ -199,7 +232,7 @@ func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 		jam2 int
 		jam3 int
 		jam4 int
-		jam5 int
+		// jam5 int
 	)
 	var arrJam []int
 	err := m.Conn.Get(&jam1,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =1 and id_pelayanan = $2`, tk, idp)
@@ -234,13 +267,13 @@ func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 	if jam4 < 5 {
 		arrJam = append(arrJam, 4)
 	}
-	err5 := m.Conn.Get(&jam5,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =5 and id_pelayanan = $2`, tk, idp)
-	if err5 != nil {
-		log.Panicln(err5)
-	}
-	if jam5 < 5 {
-		arrJam = append(arrJam, 5)
-	}
+	// err5 := m.Conn.Get(&jam5,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =5 and id_pelayanan = $2`, tk, idp)
+	// if err5 != nil {
+	// 	log.Panicln(err5)
+	// }
+	// if jam5 < 5 {
+	// 	arrJam = append(arrJam, 5)
+	// }
 	return arrJam
 	
 }

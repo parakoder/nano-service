@@ -2,11 +2,10 @@ package repository
 
 import (
 	"nano-service/models"
-	"time"
 )
 type Nano interface {
 	GetPelayanan()([]models.Pelayanan, error)
-	GenerateNoAntrian(idp int, tgl_kedatangan time.Time)string
+	GenerateNoAntrian(idp int, tgl_kedatangan string)(string, error)
 	CreateAntrian(models.FormIsian)(int, error)
 	GetAntrian(id int)(models.GetAntrian, error)
 	CekAntrian(tk string, jkd int, idp int) bool
