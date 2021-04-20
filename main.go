@@ -39,6 +39,9 @@ func main(){
 			p.POST("/createAntrian", pController.CreateAntrian)
 			p.GET("/cekAntrian", pController.CekAntrian)
 		}
+		// r.OPTIONS("*", func(){
+
+		// })
 		r.Use(cors.New(cors.Config{
 			AllowOrigins:     []string{"*"},
 			AllowMethods:     []string{"POST, GET, OPTIONS, PUT, DELETE"},

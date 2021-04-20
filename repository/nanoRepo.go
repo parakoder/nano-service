@@ -5,7 +5,7 @@ import (
 )
 type Nano interface {
 	GetPelayanan()([]models.Pelayanan, error)
-	GenerateNoAntrian(idp int, tgl_kedatangan string)(string, error)
+	GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(string, error)
 	CreateAntrian(models.FormIsian)(int, error)
 	GetAntrian(id int)(models.GetAntrian, error)
 	CekAntrian(tk string, jkd int, idp int) bool

@@ -73,46 +73,116 @@ func (m *mySQLNano) CekAntrian(tk string,jk int, idp int) bool {
 
 }
 
-func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string)(string, error) {
+func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(string, error) {
 	var jamK int
 	var noAtrian string
+	log.Println("JAM ", jamK)
+	
 	switch idp {
 	case 1 :
-		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2`, tgl_kedatangan, idp)
-	if err != nil {
-		log.Panicln(err)
-	}
-
-	noAtrian = fmt.Sprintf("%s%d", "A", jamK +1)
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+		if err != nil {
+			log.Panicln(err)
+		}
+		if jk == 1 {
+			jamKD := 0
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "A",  i)
+		} else if jk == 2{
+			jamKD := 5
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "A",  i)
+		} else if jk == 3{
+			jamKD := 10
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "A",  i)
+		}else if jk == 4{
+			jamKD := 15
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "A",  i)
+		}
+		
+		log.Println("JAM CASE ", jamK)
+		// noAtrian = fmt.Sprintf("%s%d", "A", jamK +1)
 
 	case 2 :
-		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2`, tgl_kedatangan, idp)
-	if err != nil {
-		log.Panicln(err)
-	}
-
-	noAtrian = fmt.Sprintf("%s%d", "B", jamK +1)
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+		if err != nil {
+			log.Panicln(err)
+		}
+		if jk == 1 {
+			jamKD := 0
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "B",  i)
+		} else if jk == 2{
+			jamKD := 5
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "B",  i)
+		} else if jk == 3{
+			jamKD := 10
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "B",  i)
+		}else if jk == 4{
+			jamKD := 15
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "B",  i)
+		}
+		// noAtrian = fmt.Sprintf("%s%d", "B", jamK +1)
 
 	case 3 :
-		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2`, tgl_kedatangan, idp)
-	if err != nil {
-		log.Panicln(err)
-	}
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+		if err != nil {
+			log.Panicln(err)
+		}
+		if jk == 1 {
+			jamKD := 0
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "C",  i)
+		} else if jk == 2{
+			jamKD := 5
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "C",  i)
+		} else if jk == 3{
+			jamKD := 10
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "C",  i)
+		}else if jk == 4{
+			jamKD := 15
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "C",  i)
+		}
 
-	noAtrian = fmt.Sprintf("%s%d", "C", jamK +1)
+		// noAtrian = fmt.Sprintf("%s%d", "C", jamK +1)
 
 	case 4 :
-		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2`, tgl_kedatangan, idp)
-	if err != nil {
-		log.Panicln(err)
-	}
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+		if err != nil {
+			log.Panicln(err)
+		}
+		if jk == 1 {
+			jamKD := 0
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "D",  i)
+		} else if jk == 2{
+			jamKD := 5
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "D",  i)
+		} else if jk == 3{
+			jamKD := 10
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "D",  i)
+		}else if jk == 4{
+			jamKD := 15
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "D",  i)
+		}
 
-	noAtrian = fmt.Sprintf("%s%d", "D", jamK +1)
+		// noAtrian = fmt.Sprintf("%s%d", "D", jamK +1)
 
 	
 
 	}
-	log.Println("JAM ", jamK)
+	// log.Println("JAM ", jamK)
 	if jamK > 19 {
 		return "", errors.New("Antrian Sudah Penuh untuk hari ini")
 	}
@@ -137,7 +207,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
 	// log.Println("ID return ", r)
 	var id int
 	var rm models.GetAntrian
-	noAntrain, errAnt := m.GenerateNoAntrian(f.Id_pelayanan, f.Tanggal_kedatangan)
+	noAntrain, errAnt := m.GenerateNoAntrian(f.Id_pelayanan, f.Tanggal_kedatangan, f.Jam_kedatangan)
 	if errAnt != nil {
 		return 0, errAnt
 	}
@@ -197,30 +267,29 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
 	if errBr != nil {
 		log.Panicln(errBr)
 	}
-	request, errReq := http.NewRequest("POST", "http://43.229.254.22:8081/generate", bytes.NewBuffer(br))
-				request.Header.Set("Content-type", "application/json")
-				timeout := time.Duration(5 * time.Second)
-				client := http.Client{
-					Timeout: timeout,
-				}
-				if errReq != nil {
-
-					log.Panicln(errReq.Error())
-				}
-				resp, errResp := client.Do(request)
-				log.Println("LOG BODY RESPONSE ", resp)
-				if errResp != nil {
-					log.Panicln(errResp.Error())
-				}
-				defer resp.Body.Close()
-				bd, errBody := ioutil.ReadAll(resp.Body)
-				
-				if errBody != nil {
-					log.Panicln(errBody.Error())
-				}
-				var dataErrorRes ErrorBody
-				json.Unmarshal(bd, &dataErrorRes)
-				log.Println("LOG REQUEST EMAIL", dataErrorRes)
+		request, errReq := http.NewRequest("POST", "http://43.229.254.22:8081/generate", bytes.NewBuffer(br))
+			request.Header.Set("Content-type", "application/json")
+			timeout := time.Duration(5 * time.Second)
+			client := http.Client{
+				Timeout: timeout,
+			}
+			if errReq != nil {
+				log.Panicln(errReq.Error())
+			}
+			resp, errResp := client.Do(request)
+			log.Println("LOG BODY RESPONSE ", resp)
+			if errResp != nil {
+				log.Panicln(errResp.Error())
+			}
+			defer resp.Body.Close()
+			bd, errBody := ioutil.ReadAll(resp.Body)
+			
+			if errBody != nil {
+				log.Panicln(errBody.Error())
+			}
+			var dataErrorRes ErrorBody
+			json.Unmarshal(bd, &dataErrorRes)
+			log.Println("LOG REQUEST EMAIL", dataErrorRes)
 
 
 	return id, nil
