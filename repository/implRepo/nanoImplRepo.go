@@ -61,12 +61,12 @@ func (m *mySQLNano) GetPelayanan() ([]models.Pelayanan, error) {
 
 func (m *mySQLNano) CekAntrian(tk string,jk int, idp int) bool {
 	var totalJam int
-	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan = $2 and id_pelayanan=$3`,tk, jk, idp)
+	err1 := m.Conn.Get(&totalJam, `select COUNT(jam_kedatangan) from tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan=$2`,tk, idp)
 	if err1 != nil {
 		log.Panicln(err1)
 		return true
 	}
-	if totalJam >= 5 {
+	if totalJam >= 20 {
 		return false
 	}
 	return true
@@ -234,11 +234,13 @@ func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 		jam4 int
 		// jam5 int
 	)
+	log.Println("PARAMS ", tk, idp)
 	var arrJam []int
 	err := m.Conn.Get(&jam1,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =1 and id_pelayanan = $2`, tk, idp)
 	if err != nil {
 		log.Panicln(err)
 	}
+	log.Println("JAM AJA ", jam1)
 	if jam1 < 5 {
 		arrJam = append(arrJam, 1)
 	}
@@ -255,6 +257,7 @@ func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 	if err3 != nil {
 		log.Panicln(err3)
 	}
+	
 	if jam3 < 5 {
 		arrJam = append(arrJam, 3)
 	}
@@ -274,6 +277,7 @@ func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 	// if jam5 < 5 {
 	// 	arrJam = append(arrJam, 5)
 	// }
+	log.Println("JAM AVAIL ", arrJam)
 	return arrJam
 	
 }
