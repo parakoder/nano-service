@@ -274,7 +274,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (models.GetAntrian, error)
 	// ca := `INSERT INTO tran_form_isian (nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`
  	// err := m.Conn.MustExec(ca, f.Nama_lengkap, f.No_identitas, f.Jenis_kelamin, f.Alamat, f.Email, f.No_hp, dates, f.Jam_kedatangan, f.Id_pelayanan)
 	// log.Println("ID return ", r)
-	var id int
+	// var id int
 	var rm models.GetAntrian
 	noAntrain, errAnt := m.GenerateNoAntrian(f.Id_pelayanan, f.Tanggal_kedatangan, f.Jam_kedatangan)
 	if errAnt != nil {
@@ -320,12 +320,12 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (models.GetAntrian, error)
 	if errPl != nil {
 		log.Println("ID PELAYANAN TIDAK TERSEDIA")
 	} 
-	t := strconv.Itoa(id)
+	t := strconv.Itoa(rm.ID)
 	log.Println("ID ", t)
 	body := map[string]interface{}{
 		"id": t,
-		"jadwal": jadwal,
-		"antrian": noAntrain,
+		"jadwal": rm.Tanggal_kedatangan,
+		"antrian": rm.No_Antrian,
 		"loket": loket,
 		"email": rm.Email,
 		"name": rm.Nama_lengkap,
