@@ -336,7 +336,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (models.GetAntrian, error)
 	if errBr != nil {
 		log.Panicln(errBr)
 	}
-		request, errReq := http.NewRequest("POST", "http://43.229.254.22:8081/generate1", bytes.NewBuffer(br))
+		request, errReq := http.NewRequest("POST", "http://43.229.254.22:8081/generate", bytes.NewBuffer(br))
 			request.Header.Set("Content-type", "application/json")
 			timeout := time.Duration(5 * time.Second)
 			client := http.Client{
