@@ -177,6 +177,75 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(st
 			noAtrian = fmt.Sprintf("%s%d", "D",  i)
 		}
 
+	case 5 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+		if err != nil {
+			log.Panicln(err)
+		}
+		if jk == 1 {
+			jamKD := 0
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "E",  i)
+		} else if jk == 2{
+			jamKD := 5
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "E",  i)
+		} else if jk == 3{
+			jamKD := 10
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "E",  i)
+		}else if jk == 4{
+			jamKD := 15
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "E",  i)
+		}
+
+	case 6 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+		if err != nil {
+			log.Panicln(err)
+		}
+		if jk == 1 {
+			jamKD := 0
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "F",  i)
+		} else if jk == 2{
+			jamKD := 5
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "F",  i)
+		} else if jk == 3{
+			jamKD := 10
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "F",  i)
+		}else if jk == 4{
+			jamKD := 15
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "F",  i)
+		}
+
+	case 7 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+		if err != nil {
+			log.Panicln(err)
+		}
+		if jk == 1 {
+			jamKD := 0
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "G",  i)
+		} else if jk == 2{
+			jamKD := 5
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "G",  i)
+		} else if jk == 3{
+			jamKD := 10
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "G",  i)
+		}else if jk == 4{
+			jamKD := 15
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "G",  i)
+		}
+
 		// noAtrian = fmt.Sprintf("%s%d", "D", jamK +1)
 
 	
