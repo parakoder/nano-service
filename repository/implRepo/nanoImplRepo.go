@@ -266,7 +266,7 @@ type ErrorBody struct {
     Error               string          `json:“error”`
 }
 
-func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
+func (m *mySQLNano) CreateAntrian(f models.FormIsian) (models.GetAntrian, error) {
 	// defer m.Conn.Close()
 	// dt := time.Now()
 	// dates := dt.Format("2006.01.02 15:04:05")
@@ -278,12 +278,12 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
 	var rm models.GetAntrian
 	noAntrain, errAnt := m.GenerateNoAntrian(f.Id_pelayanan, f.Tanggal_kedatangan, f.Jam_kedatangan)
 	if errAnt != nil {
-		return 0, errAnt
+		return rm, errAnt
 	}
 	fmt.Println("NO ANTRIAN ", noAntrain)
 
 	row, err := m.Conn.NamedQuery(`INSERT INTO tran_form_isian (nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian) 
-	VALUES(:nl, :ni, :jk, :al, :em, :nh, :tk, :jkk, :idp, :na) RETURNING id, tanggal_kedatangan, no_antrian, id_pelayanan, email, nama_lengkap, jam_kedatangan`, map[string]interface{}{
+	VALUES(:nl, :ni, :jk, :al, :em, :nh, :tk, :jkk, :idp, :na) RETURNING id, nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian`, map[string]interface{}{
 		"nl" : f.Nama_lengkap,
 		"ni" : f.No_identitas,
 		"jk" : f.Jenis_kelamin,
@@ -297,10 +297,10 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
 	})
 		
 	if err != nil {
-		return 0, err
+		return rm, err
 	}
 	for row.Next(){
-		row.Scan(&id, &rm.Tanggal_kedatangan, &rm.No_Pelayanan, &rm.Id_pelayanan, &rm.Email, &rm.Nama_lengkap, &rm.Jam_kedatangan)
+		row.Scan(&rm.ID, &rm.Nama_lengkap, &rm.No_identitas, &rm.Jenis_kelamin, &rm.Alamat, &rm.Email, &rm.No_hp, &rm.Tanggal_kedatangan, &rm.Jam_kedatangan, &rm.Id_pelayanan, &rm.No_Antrian)
 	}
 	jadwal := rm.Tanggal_kedatangan.Format("2006-01-02")
 	log.Println("TANGGAL ", jadwal)
@@ -336,7 +336,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
 	if errBr != nil {
 		log.Panicln(errBr)
 	}
-		request, errReq := http.NewRequest("POST", "http://43.229.254.22:8081/generate", bytes.NewBuffer(br))
+		request, errReq := http.NewRequest("POST", "http://43.229.254.22:8081/generate1", bytes.NewBuffer(br))
 			request.Header.Set("Content-type", "application/json")
 			timeout := time.Duration(5 * time.Second)
 			client := http.Client{
@@ -361,7 +361,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (int, error) {
 			log.Println("LOG REQUEST EMAIL", dataErrorRes)
 
 
-	return id, nil
+	return rm, nil
 }
 
 func (m mySQLNano)GetAvailJam(tk string, idp int) []int{

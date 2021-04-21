@@ -8,6 +8,12 @@ type ResponsePelayanan struct {
 	Data    []Pelayanan `json:"data"`
 }
 
+type ResponseAntrian struct {
+	Status  int             `json:"status"`
+	Message string          `json:"messages"`
+	Data    GetAntrian 	`json:"data"`
+}
+
 type Pelayanan struct {
 	ID int `json:"id"`
 	Nama string `json:"pelayanan"`
@@ -62,6 +68,6 @@ type GetAntrian struct {
 	Tanggal_kedatangan *time.Time `json:"tanggalKedatangan"`
 	Jam_kedatangan *int `json:"jamKedatangan"`
 	Id_pelayanan int `json:"idPelayanan"`
-	Pelayanan string `json:"pelayanan"`
-	No_Pelayanan string `json:"noPelayanan"`
+	// Pelayanan string `json:"pelayanan"`
+	No_Antrian string `json:"noAntrian"`
 }
