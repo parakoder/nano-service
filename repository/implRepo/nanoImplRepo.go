@@ -86,19 +86,19 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(st
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "A",  i)
+			noAtrian = fmt.Sprintf("%s%d", "I",  i)
 		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "A",  i)
+			noAtrian = fmt.Sprintf("%s%d", "I",  i)
 		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "A",  i)
+			noAtrian = fmt.Sprintf("%s%d", "I",  i)
 		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "A",  i)
+			noAtrian = fmt.Sprintf("%s%d", "I",  i)
 		}
 		
 		// noAtrian = fmt.Sprintf("%s%d", "A", jamK +1)
@@ -111,19 +111,19 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(st
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "B",  i)
+			noAtrian = fmt.Sprintf("%s%d", "J",  i)
 		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "B",  i)
+			noAtrian = fmt.Sprintf("%s%d", "J",  i)
 		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "B",  i)
+			noAtrian = fmt.Sprintf("%s%d", "J",  i)
 		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "B",  i)
+			noAtrian = fmt.Sprintf("%s%d", "J",  i)
 		}
 		// noAtrian = fmt.Sprintf("%s%d", "B", jamK +1)
 
@@ -135,19 +135,19 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(st
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "C",  i)
+			noAtrian = fmt.Sprintf("%s%d", "K",  i)
 		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "C",  i)
+			noAtrian = fmt.Sprintf("%s%d", "K",  i)
 		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "C",  i)
+			noAtrian = fmt.Sprintf("%s%d", "K",  i)
 		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "C",  i)
+			noAtrian = fmt.Sprintf("%s%d", "K",  i)
 		}
 
 		// noAtrian = fmt.Sprintf("%s%d", "C", jamK +1)
@@ -160,19 +160,19 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(st
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "D",  i)
+			noAtrian = fmt.Sprintf("%s%d", "L",  i)
 		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "D",  i)
+			noAtrian = fmt.Sprintf("%s%d", "L",  i)
 		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "D",  i)
+			noAtrian = fmt.Sprintf("%s%d", "L",  i)
 		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "D",  i)
+			noAtrian = fmt.Sprintf("%s%d", "L",  i)
 		}
 
 	case 5 :
@@ -183,19 +183,19 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(st
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "E",  i)
+			noAtrian = fmt.Sprintf("%s%d", "M",  i)
 		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "E",  i)
+			noAtrian = fmt.Sprintf("%s%d", "M",  i)
 		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "E",  i)
+			noAtrian = fmt.Sprintf("%s%d", "M",  i)
 		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "E",  i)
+			noAtrian = fmt.Sprintf("%s%d", "M",  i)
 		}
 
 	case 6 :
@@ -206,19 +206,19 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(st
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "F",  i)
+			noAtrian = fmt.Sprintf("%s%d", "N",  i)
 		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "F",  i)
+			noAtrian = fmt.Sprintf("%s%d", "N",  i)
 		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "F",  i)
+			noAtrian = fmt.Sprintf("%s%d", "N",  i)
 		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "F",  i)
+			noAtrian = fmt.Sprintf("%s%d", "N",  i)
 		}
 
 	case 7 :
@@ -229,19 +229,19 @@ func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(st
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "G",  i)
+			noAtrian = fmt.Sprintf("%s%d", "O",  i)
 		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "G",  i)
+			noAtrian = fmt.Sprintf("%s%d", "O",  i)
 		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "G",  i)
+			noAtrian = fmt.Sprintf("%s%d", "O",  i)
 		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "G",  i)
+			noAtrian = fmt.Sprintf("%s%d", "O",  i)
 		}
 
 		// noAtrian = fmt.Sprintf("%s%d", "D", jamK +1)
@@ -298,13 +298,17 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (models.GetAntrian, error)
 	var jamKdtng string
 	switch *rm.Jam_kedatangan {
 	case 1 : 
-		jamKdtng = "09.00 WIB"
+		jamKdtng = "08.00 WIB"
 	case 2 :
-		jamKdtng = "10.00 WIB"
+		jamKdtng = "09.00 WIB"
 	case 3 : 
-		jamKdtng = "11.00 WIB"
+		jamKdtng = "10.00 WIB"
 	case 4 : 
-		jamKdtng = "12.00 WIB"
+		jamKdtng = "11.00 WIB"
+	case 5 : 
+		jamKdtng = "13.00 WIB"
+	case 6 : 
+		jamKdtng = "14.00 WIB"
 	}
 	var loket string
 	errPl := m.Conn.Get(&loket, `SELECT nama FROM mst_pelayanan WHERE id =$1`, rm.Id_pelayanan)
@@ -361,6 +365,8 @@ func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 		jam2 int
 		jam3 int
 		jam4 int
+		jam5 int
+		jam6 int
 	)
 	var arrJam []int
 	err := m.Conn.Get(&jam1,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =1 and id_pelayanan = $2`, tk, idp)
@@ -395,6 +401,22 @@ func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 	}
 	if jam4 < 5 {
 		arrJam = append(arrJam, 4)
+	}
+
+	err5 := m.Conn.Get(&jam5,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =5 and id_pelayanan = $2`, tk, idp)
+	if err5 != nil {
+		log.Panicln(err5)
+	}
+	if jam5 < 5 {
+		arrJam = append(arrJam, 5)
+	}
+
+	err6 := m.Conn.Get(&jam6,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and jam_kedatangan =6 and id_pelayanan = $2`, tk, idp)
+	if err6 != nil {
+		log.Panicln(err4)
+	}
+	if jam6 < 5 {
+		arrJam = append(arrJam, 6)
 	}
 	return arrJam
 	
