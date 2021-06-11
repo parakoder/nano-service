@@ -331,8 +331,8 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (models.GetAntrian, error)
 	if errAnt != nil {
 		return rm, errAnt
 	}
-	row, err := m.Conn.NamedQuery(`INSERT INTO tran_form_isian (nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian) 
-	VALUES(:nl, :ni, :jk, :al, :em, :nh, :tk, :jkk, :idp, :na) RETURNING id, nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian`, map[string]interface{}{
+	row, err := m.Conn.NamedQuery(`INSERT INTO tran_form_isian (nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian, status) 
+	VALUES(:nl, :ni, :jk, :al, :em, :nh, :tk, :jkk, :idp, :na, :st) RETURNING id, nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian`, map[string]interface{}{
 		"nl" : f.Nama_lengkap,
 		"ni" : f.No_identitas,
 		"jk" : f.Jenis_kelamin,
@@ -343,6 +343,7 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (models.GetAntrian, error)
 		"jkk" : f.Jam_kedatangan,
 		"idp" : f.Id_pelayanan,
 		"na" : noAntrain,
+		"st" : "Waiting",
 	})
 		
 	if err != nil {
@@ -415,7 +416,6 @@ func (m *mySQLNano) CreateAntrian(f models.FormIsian) (models.GetAntrian, error)
 
 	return rm, nil
 }
-
 func (m mySQLNano)GetAvailJam(tk string, idp int) []int{
 	var (
 		jam1 int
