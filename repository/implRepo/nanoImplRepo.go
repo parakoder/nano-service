@@ -73,231 +73,232 @@ func (m *mySQLNano) CekAntrian(tk string, jk int, idp int) bool {
 
 }
 
-func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int) (string, error) {
+func (m *mySQLNano) GenerateNoAntrian(idp int, tgl_kedatangan string, jk int)(string, error) {
 	var jamK int
 	var noAtrian string
-
+	
 	switch idp {
-	case 1:
-		err := m.Conn.Get(&jamK, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+	case 1 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
 		if err != nil {
 			log.Panicln(err)
 		}
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "I", i)
-		} else if jk == 2 {
+			noAtrian = fmt.Sprintf("%s%d", "I ",  i)
+		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "I", i)
-		} else if jk == 3 {
+			noAtrian = fmt.Sprintf("%s%d", "I ",  i)
+		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "I", i)
-		} else if jk == 4 {
+			noAtrian = fmt.Sprintf("%s%d", "I ",  i)
+		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "I", i)
-		} else if jk == 5 {
+			noAtrian = fmt.Sprintf("%s%d", "I ",  i)
+		}else if jk == 5{
 			jamKD := 20
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "I", i)
-		} else if jk == 6 {
+			noAtrian = fmt.Sprintf("%s%d", "I ",  i)
+		}else if jk == 6{
 			jamKD := 25
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "I", i)
+			noAtrian = fmt.Sprintf("%s%d", "I ",  i)
 		}
-
+		
+		
 		// noAtrian = fmt.Sprintf("%s%d", "A", jamK +1)
 
-	case 2:
-		err := m.Conn.Get(&jamK, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+	case 2 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
 		if err != nil {
 			log.Panicln(err)
 		}
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "J", i)
-		} else if jk == 2 {
+			noAtrian = fmt.Sprintf("%s%d", "J ",  i)
+		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "J", i)
-		} else if jk == 3 {
+			noAtrian = fmt.Sprintf("%s%d", "J ",  i)
+		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "J", i)
-		} else if jk == 4 {
+			noAtrian = fmt.Sprintf("%s%d", "J ",  i)
+		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "J", i)
-		} else if jk == 5 {
+			noAtrian = fmt.Sprintf("%s%d", "J ",  i)
+		}else if jk == 5{
 			jamKD := 20
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "J", i)
-		} else if jk == 6 {
+			noAtrian = fmt.Sprintf("%s%d", "J ",  i)
+		}else if jk == 6{
 			jamKD := 25
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "J", i)
+			noAtrian = fmt.Sprintf("%s%d", "J ",  i)
 		}
 		// noAtrian = fmt.Sprintf("%s%d", "B", jamK +1)
 
-	case 3:
-		err := m.Conn.Get(&jamK, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+	case 3 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
 		if err != nil {
 			log.Panicln(err)
 		}
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "K", i)
-		} else if jk == 2 {
+			noAtrian = fmt.Sprintf("%s%d", "K ",  i)
+		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "K", i)
-		} else if jk == 3 {
+			noAtrian = fmt.Sprintf("%s%d", "K ",  i)
+		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "K", i)
-		} else if jk == 4 {
+			noAtrian = fmt.Sprintf("%s%d", "K ",  i)
+		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "K", i)
-		} else if jk == 5 {
+			noAtrian = fmt.Sprintf("%s%d", "K ",  i)
+		}else if jk == 5{
 			jamKD := 20
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "K", i)
-		} else if jk == 6 {
+			noAtrian = fmt.Sprintf("%s%d", "K ",  i)
+		}else if jk == 6{
 			jamKD := 25
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "K", i)
+			noAtrian = fmt.Sprintf("%s%d", "K ",  i)
 		}
 
 		// noAtrian = fmt.Sprintf("%s%d", "C", jamK +1)
 
-	case 4:
-		err := m.Conn.Get(&jamK, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+	case 4 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
 		if err != nil {
 			log.Panicln(err)
 		}
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "L", i)
-		} else if jk == 2 {
+			noAtrian = fmt.Sprintf("%s%d", "L ",  i)
+		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "L", i)
-		} else if jk == 3 {
+			noAtrian = fmt.Sprintf("%s%d", "L ",  i)
+		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "L", i)
-		} else if jk == 4 {
+			noAtrian = fmt.Sprintf("%s%d", "L ",  i)
+		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "L", i)
-		} else if jk == 5 {
+			noAtrian = fmt.Sprintf("%s%d", "L ",  i)
+		}else if jk == 5{
 			jamKD := 20
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "L", i)
-		} else if jk == 6 {
+			noAtrian = fmt.Sprintf("%s%d", "L ",  i)
+		}else if jk == 6{
 			jamKD := 25
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "L", i)
+			noAtrian = fmt.Sprintf("%s%d", "L ",  i)
 		}
 
-	case 5:
-		err := m.Conn.Get(&jamK, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+	case 5 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
 		if err != nil {
 			log.Panicln(err)
 		}
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "M", i)
-		} else if jk == 2 {
+			noAtrian = fmt.Sprintf("%s%d", "M ",  i)
+		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "M", i)
-		} else if jk == 3 {
+			noAtrian = fmt.Sprintf("%s%d", "M ",  i)
+		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "M", i)
-		} else if jk == 4 {
+			noAtrian = fmt.Sprintf("%s%d", "M ",  i)
+		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "M", i)
-		} else if jk == 5 {
+			noAtrian = fmt.Sprintf("%s%d", "M ",  i)
+		}else if jk == 5{
 			jamKD := 20
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "M", i)
-		} else if jk == 6 {
+			noAtrian = fmt.Sprintf("%s%d", "M ",  i)
+		}else if jk == 6{
 			jamKD := 25
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "M", i)
+			noAtrian = fmt.Sprintf("%s%d", "M ",  i)
 		}
 
-	case 6:
-		err := m.Conn.Get(&jamK, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+	case 6 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
 		if err != nil {
 			log.Panicln(err)
 		}
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "N", i)
-		} else if jk == 2 {
+			noAtrian = fmt.Sprintf("%s%d", "N ",  i)
+		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "N", i)
-		} else if jk == 3 {
+			noAtrian = fmt.Sprintf("%s%d", "N ",  i)
+		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "N", i)
-		} else if jk == 4 {
+			noAtrian = fmt.Sprintf("%s%d", "N ",  i)
+		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "N", i)
-		} else if jk == 5 {
+			noAtrian = fmt.Sprintf("%s%d", "N ",  i)
+		}else if jk == 5{
 			jamKD := 20
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "N", i)
-		} else if jk == 6 {
+			noAtrian = fmt.Sprintf("%s%d", "N ",  i)
+		}else if jk == 6{
 			jamKD := 25
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "N", i)
+			noAtrian = fmt.Sprintf("%s%d", "N ",  i)
 		}
 
-	case 7:
-		err := m.Conn.Get(&jamK, `select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+	case 7 :
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
 		if err != nil {
 			log.Panicln(err)
 		}
 		if jk == 1 {
 			jamKD := 0
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "O", i)
-		} else if jk == 2 {
+			noAtrian = fmt.Sprintf("%s%d", "O ",  i)
+		} else if jk == 2{
 			jamKD := 5
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "O", i)
-		} else if jk == 3 {
+			noAtrian = fmt.Sprintf("%s%d", "O ",  i)
+		} else if jk == 3{
 			jamKD := 10
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "O", i)
-		} else if jk == 4 {
+			noAtrian = fmt.Sprintf("%s%d", "O ",  i)
+		}else if jk == 4{
 			jamKD := 15
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "O", i)
-		} else if jk == 5 {
+			noAtrian = fmt.Sprintf("%s%d", "O ",  i)
+		}else if jk == 5{
 			jamKD := 20
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "O", i)
-		} else if jk == 6 {
+			noAtrian = fmt.Sprintf("%s%d", "O ",  i)
+		}else if jk == 6{
 			jamKD := 25
 			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "O", i)
+			noAtrian = fmt.Sprintf("%s%d", "O ",  i)
 		}
 
 		// noAtrian = fmt.Sprintf("%s%d", "D", jamK +1)
