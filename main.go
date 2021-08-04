@@ -37,6 +37,7 @@ func main(){
 			p.GET("/getAntrian", pController.GetAntrian)
 			// p.GET("/getPDF", pController.DownloadPdf)
 			p.POST("/createAntrian", pController.CreateAntrian)
+			p.POST("/createAntrianOffline", pController.CreateAntrianOffline)
 			p.GET("/cekAntrian", pController.CekAntrian)
 		}
 	

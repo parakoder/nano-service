@@ -68,6 +68,34 @@ func (n *NanoRepo) CreateAntrian(c *gin.Context) {
 
 }
 
+func (n *NanoRepo) CreateAntrianOffline(c *gin.Context) {
+	c.Header("Access-Control-Allow-Headers", "Content-type")
+	c.Header("Access-Control-Allow-Method", "POST, GET, OPTIONS, PUT, DELETE")
+	c.Header("Access-Control-Allow-Origin", "*")
+	var responses models.ResponseAntrian
+	var form models.FormIsian
+	errBind := c.BindJSON(&form)
+	if errBind != nil {
+		c.AbortWithStatusJSON(c.Writer.Status(), handler.ErrorHandler(c.Writer.Status(), 404, errBind.Error()))
+		log.Panicln(errBind.Error())
+		return
+	}
+
+	idAnt, err := n.repo.CreateAntrianOffline(form)
+	if err != nil {
+		c.AbortWithStatusJSON(400, handler.ErrorHandler(400, 404, err.Error()))
+		log.Panicln(err)
+		return
+	}
+	responses.Status = 200
+	responses.Message = "Success"
+	responses.Data = idAnt
+	c.Header("Content-Type", "application/json")
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	json.NewEncoder(c.Writer).Encode(responses)
+
+}
+
 
 func (n *NanoRepo) GetAntrian(c *gin.Context) {
 	c.Header("Access-Control-Allow-Headers", "Content-type")
