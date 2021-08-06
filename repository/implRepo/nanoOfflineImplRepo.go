@@ -114,7 +114,7 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 	
 	switch idp {
 	case 1 :
-		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3`, tgl_kedatangan, idp, jk)
+		err := m.Conn.Get(&jamK,`select COUNT(jam_kedatangan) from  tran_form_isian where tanggal_kedatangan::date = $1 and id_pelayanan = $2 and jam_kedatangan = $3 AND metode = 'offline'`, tgl_kedatangan, idp, jk)
 		if err != nil {
 			log.Panicln(err)
 		}
