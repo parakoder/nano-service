@@ -2,15 +2,19 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
 	"log"
 	"nano-service/config"
 	handler "nano-service/handlers"
 	"nano-service/models"
 	"nano-service/repository"
 	"nano-service/repository/implRepo"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/knq/escpos"
 )
 
 type NanoRepo struct {
@@ -87,6 +91,27 @@ func (n *NanoRepo) CreateAntrianOffline(c *gin.Context) {
 		log.Panicln(err)
 		return
 	}
+
+	f, err := os.OpenFile(os.Getenv("PRINTER_ADDRESSS"), os.O_RDWR, 0)
+    if err != nil {
+        fmt.Println("Error when connect to printer")
+    }
+    defer f.Close()
+
+    w := io.ReadWriter(f)
+    p := escpos.New(w)
+
+	p.Init()
+    p.SetSmooth(1)
+    p.SetFontSize(2, 3)
+    p.SetFont("Test")
+    p.Write(idAnt.No_Antrian)
+    p.Formfeed()
+    p.Cut()
+    p.End()
+
+	// fmt.Printf("TES %s", p)
+
 	responses.Status = 200
 	responses.Message = "Success"
 	responses.Data = idAnt

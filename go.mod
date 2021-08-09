@@ -12,8 +12,10 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/jung-kurt/gofpdf v1.16.2
+	github.com/knq/escpos v0.0.0-20201012084129-81d0344e35fa
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lib/pq v1.10.0
+	github.com/mailru/easyjson v0.7.7
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect

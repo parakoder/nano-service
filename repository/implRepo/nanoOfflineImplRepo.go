@@ -17,6 +17,7 @@ func (m *mySQLNano) CreateAntrianOffline(f models.FormIsian) (models.GetAntrian,
 	// err := m.Conn.MustExec(ca, f.Nama_lengkap, f.No_identitas, f.Jenis_kelamin, f.Alamat, f.Email, f.No_hp, dates, f.Jam_kedatangan, f.Id_pelayanan)
 	// log.Println("ID return ", r)
 	// var id int
+	
 	var rm models.GetAntrian
 	noAntrain, errAnt := m.GenerateNoAntrianOffline(f.Id_pelayanan, f.Tanggal_kedatangan, f.Jam_kedatangan)
 	if errAnt != nil {
