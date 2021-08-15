@@ -93,22 +93,22 @@ func (n *NanoRepo) CreateAntrianOffline(c *gin.Context) {
 	}
 
 	f, err := os.OpenFile(os.Getenv("PRINTER_ADDRESSS"), os.O_RDWR, 0)
-    if err != nil {
-        fmt.Println("Error when connect to printer")
-    }
-    defer f.Close()
+	if err != nil {
+		fmt.Println("Error when connect to printer")
+	}
+	defer f.Close()
 
-    w := io.ReadWriter(f)
-    p := escpos.New(w)
+	w := io.ReadWriter(f)
+	p := escpos.New(w)
 
 	p.Init()
-    p.SetSmooth(1)
-    p.SetFontSize(2, 3)
-    p.SetFont("Test")
-    p.Write(idAnt.No_Antrian)
-    p.Formfeed()
-    p.Cut()
-    p.End()
+	p.SetSmooth(1)
+	p.SetFontSize(2, 3)
+	// p.SetFont("Test")
+	p.Write(idAnt.No_Antrian)
+	p.Formfeed()
+	p.Cut()
+	p.End()
 
 	// fmt.Printf("TES %s", p)
 
@@ -120,7 +120,6 @@ func (n *NanoRepo) CreateAntrianOffline(c *gin.Context) {
 	json.NewEncoder(c.Writer).Encode(responses)
 
 }
-
 
 func (n *NanoRepo) GetAntrian(c *gin.Context) {
 	c.Header("Access-Control-Allow-Headers", "Content-type")
@@ -157,11 +156,10 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 	var responses models.ResponseCekAntrian
 	var cekD models.CekAntrian
 
-
 	cek := n.repo.CekAntrian(tk, j, i)
-	
+
 	cekD.IsAvailable = cek
-	cekD.AvailableTime = n.repo.GetAvailJam(tk,i)
+	cekD.AvailableTime = n.repo.GetAvailJam(tk, i)
 	responses.Status = 200
 	responses.Message = "Success"
 	responses.Data = cekD
@@ -180,7 +178,7 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 // 	i, _ := strconv.Atoi(id)
 
 // 	payload, err := n.repo.GetAntrian(i)
-	
+
 // 	if err != nil {
 // 		c.AbortWithStatusJSON(400, handler.ErrorHandler(400, 404, err.Error()))
 // 		log.Panicln(err)
@@ -193,9 +191,6 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 // 		return
 // 	}
 
-
-
-
 // 	responses.Status = 200
 // 	responses.Message = "Success"
 // 	responses.Data = payload
@@ -204,17 +199,13 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 // 	json.NewEncoder(c.Writer).Encode(responses)
 // }
 
-
 // func GeneratePDF(m models.GetAntrian) error{
 
-	
-	
 // 	pdf := gofpdf.New("L", "mm", "A4", "")
 // 	pdf.AddPage()
 // 	pdf.SetFont("Arial", "B", 16)
 // 	// pdf.Text(90, 30, m.Pelayanan)
 // 	pdf.CellFormat(250, 7, "judul "+ m.Pelayanan, "0", 0, "CM", false, 0, "")
-
 
 // 	errPdf := pdf.OutputFileAndClose("./documents/file2.pdf")
 // 	if errPdf != nil {
