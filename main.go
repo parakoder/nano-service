@@ -12,7 +12,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main(){
+func main() {
 	if err := godotenv.Load(".env"); err != nil {
 		panic(".env not exists")
 	} else {
@@ -40,7 +40,7 @@ func main(){
 			p.POST("/createAntrianOffline", pController.CreateAntrianOffline)
 			p.GET("/cekAntrian", pController.CekAntrian)
 		}
-	
+
 		r.Use(cors.New(cors.Config{
 			AllowOrigins:     []string{"*"},
 			AllowMethods:     []string{"POST, GET, OPTIONS, PUT, DELETE"},

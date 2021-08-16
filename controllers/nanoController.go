@@ -2,8 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
-	"io"
+	"flag"
 	"log"
 	"nano-service/config"
 	handler "nano-service/handlers"
@@ -76,7 +75,7 @@ func (n *NanoRepo) CreateAntrianOffline(c *gin.Context) {
 	c.Header("Access-Control-Allow-Headers", "Content-type")
 	c.Header("Access-Control-Allow-Method", "POST, GET, OPTIONS, PUT, DELETE")
 	c.Header("Access-Control-Allow-Origin", "*")
-	var responses models.ResponseAntrian
+	var responses models.ResponseAntrianOff
 	var form models.FormIsian
 	errBind := c.BindJSON(&form)
 	if errBind != nil {
@@ -92,23 +91,7 @@ func (n *NanoRepo) CreateAntrianOffline(c *gin.Context) {
 		return
 	}
 
-	f, err := os.OpenFile(os.Getenv("PRINTER_ADDRESSS"), os.O_RDWR, 0)
-	if err != nil {
-		fmt.Println("Error when connect to printer")
-	}
-	defer f.Close()
-
-	w := io.ReadWriter(f)
-	p := escpos.New(w)
-
-	p.Init()
-	p.SetSmooth(1)
-	p.SetFontSize(2, 3)
-	// p.SetFont("Test")
-	p.Write(idAnt.No_Antrian)
-	p.Formfeed()
-	p.Cut()
-	p.End()
+	PrintTicket(idAnt.No_Antrian, idAnt.Pelayanan, idAnt.Tanggal_kedatangan, idAnt.Jam_kedatangan)
 
 	// fmt.Printf("TES %s", p)
 
@@ -167,6 +150,83 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(c.Writer).Encode(responses)
 
+}
+
+func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
+	var (
+		lpDev = flag.String("p", "/dev/usb/lp0", "Printer dev file")
+		// imgPath   = flag.String("i", "/home/septiansah/Pictures/Screenshot from 2021-07-22 15-49-25.png", "Input image")
+		// threshold = flag.Float64("t", 0.5, "Black/white threshold")
+		align = flag.String("a", "center", "Alignment (left, center, right)")
+		doCut = flag.Bool("c", false, "Cut after print")
+		// maxWidth  = flag.Int("printer-max-width", 512, "Printer max width in pixels")
+	)
+
+	flag.Parse()
+
+	// imgFile, err := os.Open(*imgPath)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// img, imgFormat, err := image.Decode(imgFile)
+	// // log.Println("IMG ", img)
+	// imgFile.Close()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// log.Print("Loaded image, format: ", imgFormat)
+
+	// ----------------------------------------------------------------------
+
+	f, err := os.OpenFile(*lpDev, os.O_RDWR, 0)
+	if err != nil {
+		// log.Fatal(err)
+	}
+
+	defer f.Close()
+	log.Print(*lpDev, " open.")
+
+	ep := escpos.New(f)
+
+	ep.Init()
+
+	ep.SetAlign(*align)
+
+	ep.SetSmooth(1)
+	ep.SetFontSize(2, 3)
+	ep.SetFont("A")
+	ep.Write("Pengadilan Negeri Jakarta Selatan")
+
+	ep.SetFontSize(1, 2)
+	ep.SetFont("A")
+	ep.Write("Jl. Ampera Raya No.133, Ragunan, Kec. Ps. Minggu,")
+	ep.Write("Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12940")
+
+	ep.SetFontSize(3, 4)
+	ep.SetFont("B")
+	ep.Write("Antrian")
+
+	ep.SetFontSize(1, 2)
+	ep.Write("Loket " + pelayanan)
+
+	ep.SetFontSize(4, 5)
+	ep.Write(noAntrian)
+
+	ep.SetFontSize(1, 2)
+	ep.Write("Tanggal " + tgl + " | Waktu: " + jam)
+	// rasterConv := &raster.Converter{
+	// 	MaxWidth:  *maxWidth,
+	// 	Threshold: *threshold,
+	// }
+
+	// rasterConv.Print(img, ep)
+
+	if *doCut {
+		ep.Cut()
+	}
+	ep.End()
 }
 
 // func (n *NanoRepo) DownloadPdf(c *gin.Context) {

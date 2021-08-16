@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"nano-service/models"
+	"strings"
 	"time"
 )
 
@@ -104,7 +105,9 @@ func getJamKedatanganID() int {
 	return idJam
 }
 
-func (m *mySQLNano) CreateAntrianOffline(f models.FormIsian) (models.GetAntrian, error) {
+var newStr string
+
+func (m *mySQLNano) CreateAntrianOffline(f models.FormIsian) (models.AntrianOffline, error) {
 	// defer m.Conn.Close()
 	// dt := time.Now()
 	// dates := dt.Format("2006.01.02 15:04:05")
@@ -114,24 +117,25 @@ func (m *mySQLNano) CreateAntrianOffline(f models.FormIsian) (models.GetAntrian,
 	// log.Println("ID return ", r)
 	// var id int
 
-	var rm models.GetAntrian
+	var rm models.AntrianOffline
+	var id int
+	var idPlyn int
+	var tgl *time.Time
+	var pelayanan string
+	var jam string
 	dt := time.Now()
 	currentDate := dt.Format("2006-01-02")
 	idJam := getJamKedatanganID()
 	noAntrain, errAnt := m.GenerateNoAntrianOffline(f.Id_pelayanan, currentDate, idJam)
 	if errAnt != nil {
+		log.Panic(errAnt)
 		return rm, errAnt
 	}
-	log.Println("DATE ", currentDate)
+	log.Println("DATE ", noAntrain)
 
-	row, err := m.Conn.NamedQuery(`INSERT INTO tran_form_isian (nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian, status, metode) 
-	VALUES(:nl, :ni, :jk, :al, :em, :nh, :tk, :jkk, :idp, :na, :st, :mt) RETURNING id, nama_lengkap, no_identitas, jenis_kelamin, alamat, email, no_hp, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian`, map[string]interface{}{
+	row, err := m.Conn.NamedQuery(`INSERT INTO tran_form_isian (nama_lengkap, tanggal_kedatangan, jam_kedatangan, id_pelayanan, no_antrian, status, metode) 
+	VALUES(:nl, :tk, :jkk, :idp, :na, :st, :mt) RETURNING id, no_antrian, tanggal_kedatangan, jam_kedatangan, id_pelayanan`, map[string]interface{}{
 		"nl":  "userOffline",
-		"ni":  nil,
-		"jk":  "-",
-		"al":  "-",
-		"em":  "-",
-		"nh":  "-",
 		"tk":  currentDate,
 		"jkk": idJam,
 		"idp": f.Id_pelayanan,
@@ -144,75 +148,52 @@ func (m *mySQLNano) CreateAntrianOffline(f models.FormIsian) (models.GetAntrian,
 		return rm, err
 	}
 	for row.Next() {
-		row.Scan(&rm.ID, &rm.Nama_lengkap, &rm.No_identitas, &rm.Jenis_kelamin, &rm.Alamat, &rm.Email, &rm.No_hp, &rm.Tanggal_kedatangan, &rm.Jam_kedatangan, &rm.Id_pelayanan, &rm.No_Antrian)
+		row.Scan(&id, &rm.No_Antrian, &tgl, &idJam, &idPlyn)
 	}
-	// // jadwal := rm.Tanggal_kedatangan.Format("2006-01-02")
-	// var jamKdtng string
-	// switch *rm.Jam_kedatangan {
-	// case 1:
-	// 	jamKdtng = "08.00 WIB"
-	// case 2:
-	// 	jamKdtng = "09.00 WIB"
-	// case 3:
-	// 	jamKdtng = "10.00 WIB"
-	// case 4:
-	// 	jamKdtng = "11.00 WIB"
-	// case 5:
-	// 	jamKdtng = "13.00 WIB"
-	// case 6:
-	// 	jamKdtng = "14.00 WIB"
-	// }
-	// var loket string
-	// errPl := m.Conn.Get(&loket, `SELECT nama FROM mst_pelayanan WHERE id =$1`, rm.Id_pelayanan)
-	// if errPl != nil {
-	// 	log.Println("ID PELAYANAN TIDAK TERSEDIA")
-	// }
-	// t := strconv.Itoa(rm.ID)
-	// log.Println("ID ", t)
-	// body := map[string]interface{}{
-	// 	"id":      t,
-	// 	"jadwal":  rm.Tanggal_kedatangan,
-	// 	"antrian": rm.No_Antrian,
-	// 	"loket":   loket,
-	// 	"email":   rm.Email,
-	// 	"name":    rm.Nama_lengkap,
-	// 	"waktu":   jamKdtng,
-	// }
-	// fmt.Println("body ", body)
-	// br, errBr := json.Marshal(body)
-	// if errBr != nil {
-	// 	log.Panicln(errBr)
-	// }
-	// request, errReq := http.NewRequest("POST", "http://43.229.254.22:8081/generate", bytes.NewBuffer(br))
-	// request.Header.Set("Content-type", "application/json")
-	// timeout := time.Duration(30 * time.Second)
-	// client := http.Client{
-	// 	Timeout: timeout,
-	// }
-	// if errReq != nil {
-	// 	log.Panicln(errReq.Error())
-	// }
-	// resp, errResp := client.Do(request)
-	// log.Println("LOG BODY RESPONSE ", resp)
-	// if errResp != nil {
-	// 	log.Panicln(errResp.Error())
-	// }
-	// defer resp.Body.Close()
-	// bd, errBody := ioutil.ReadAll(resp.Body)
+	errPlyn := m.Conn.Get(&pelayanan, `SELECT nama FROM mst_pelayanan where id = $1`, idPlyn)
+	if errPlyn != nil {
+		log.Panic(errPlyn)
+	}
 
-	// if errBody != nil {
-	// 	log.Panicln(errBody.Error())
-	// }
-	// var dataErrorRes ErrorBody
-	// json.Unmarshal(bd, &dataErrorRes)
-	// log.Println("LOG REQUEST EMAIL", dataErrorRes)
+	errJam := m.Conn.Get(&jam, `SELECT keterangan FROM ref_jam_kedatangan where id = $1`, idJam)
+	if errJam != nil {
+		log.Panic(errJam)
+	}
+	rm.Pelayanan = pelayanan
+	newJam := strings.Split(jam, "-")
+	rm.Jam_kedatangan = newJam[0]
 
+	tes := tgl.Format("Monday 02, January 2006")
+	tes1 := strings.Split(tes, " ")
+
+	switch tes1[0] {
+	case "Monday":
+		newStr = "Senin"
+	case "Tuesday":
+		newStr = "Selasa"
+	case "Wednesday":
+		newStr = "Rabu"
+	case "Thursday":
+		newStr = "Kamis"
+	case "Friday":
+		newStr = "Jumaat"
+	case "Saturday":
+		newStr = "Sabtu"
+	}
+
+	newDate := strings.Replace(tes, tes1[0], newStr, 3)
+
+	log.Println("MANTAP ", rm.Jam_kedatangan)
+
+	rm.Tanggal_kedatangan = newDate
 	return rm, nil
 }
 
 func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk int) (string, error) {
 	var jamK int
 	var noAtrian string
+
+	log.Println("PARAMS ", idp, tgl_kedatangan, jk)
 
 	switch idp {
 	case 1:
@@ -241,6 +222,10 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "A ", i)
 		} else if jk == 6 {
+			jamKD := 25
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "A ", i)
+		} else if jk == 7 {
 			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "A ", i)

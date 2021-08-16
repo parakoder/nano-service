@@ -14,6 +14,12 @@ type ResponseAntrian struct {
 	Data    GetAntrian `json:"data"`
 }
 
+type ResponseAntrianOff struct {
+	Status  int            `json:"status"`
+	Message string         `json:"messages"`
+	Data    AntrianOffline `json:"data"`
+}
+
 type Pelayanan struct {
 	ID          int      `json:"id"`
 	Nama        string   `json:"pelayanan"`
@@ -53,6 +59,12 @@ type ResponseGA struct {
 	Status  int        `json:"status"`
 	Message string     `json:"messages"`
 	Data    GetAntrian `json:"data"`
+}
+type AntrianOffline struct {
+	Tanggal_kedatangan string `json:"tanggalKedatangan"`
+	Jam_kedatangan     string `json:"jamKedatangan"`
+	Pelayanan          string `json:"pelayanan"`
+	No_Antrian         string `json:"noAntrian"`
 }
 
 type GetAntrian struct {
