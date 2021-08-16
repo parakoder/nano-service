@@ -154,7 +154,7 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 
 func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 	var (
-		lpDev = flag.String("p", "/dev/usb/lp0", "Printer dev file")
+		lpDev = flag.String("p", os.Getenv("PRINTER_ADDRESSS"), "Printer dev file")
 		// imgPath   = flag.String("i", "/home/septiansah/Pictures/Screenshot from 2021-07-22 15-49-25.png", "Input image")
 		// threshold = flag.Float64("t", 0.5, "Black/white threshold")
 		align = flag.String("a", "center", "Alignment (left, center, right)")
@@ -163,22 +163,6 @@ func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 	)
 
 	flag.Parse()
-
-	// imgFile, err := os.Open(*imgPath)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// img, imgFormat, err := image.Decode(imgFile)
-	// // log.Println("IMG ", img)
-	// imgFile.Close()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// log.Print("Loaded image, format: ", imgFormat)
-
-	// ----------------------------------------------------------------------
 
 	f, err := os.OpenFile(*lpDev, os.O_RDWR, 0)
 	if err != nil {
@@ -216,12 +200,6 @@ func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 
 	ep.SetFontSize(1, 2)
 	ep.Write("Tanggal " + tgl + " | Waktu: " + jam)
-	// rasterConv := &raster.Converter{
-	// 	MaxWidth:  *maxWidth,
-	// 	Threshold: *threshold,
-	// }
-
-	// rasterConv.Print(img, ep)
 
 	if *doCut {
 		ep.Cut()
