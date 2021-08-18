@@ -166,7 +166,7 @@ func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 
 	f, err := os.OpenFile(*lpDev, os.O_WRONLY | os.O_CREATE, 0644)
 	if err != nil {
-		// log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	defer f.Close()
