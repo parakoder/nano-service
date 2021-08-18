@@ -154,7 +154,7 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 
 func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 	var (
-		lpDev = flag.String("p", os.Getenv("PRINTER_ADDRESSS"), "Printer dev file")
+		lpDev = flag.String("p", "/dev/usb/lp3", "Printer dev file")
 		// imgPath   = flag.String("i", "/home/septiansah/Pictures/Screenshot from 2021-07-22 15-49-25.png", "Input image")
 		// threshold = flag.Float64("t", 0.5, "Black/white threshold")
 		align = flag.String("a", "center", "Alignment (left, center, right)")
@@ -164,7 +164,7 @@ func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 
 	flag.Parse()
 
-	f, err := os.OpenFile(*lpDev, os.O_RDWR, 0)
+	f, err := os.OpenFile(*lpDev, os.O_WRONLY | os.O_CREATE, 0644)
 	if err != nil {
 		// log.Fatal(err)
 	}
