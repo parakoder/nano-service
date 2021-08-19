@@ -182,25 +182,30 @@ func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 	ep.SetFontSize(2, 3)
 	ep.SetFont("A")
 	ep.Write("Pengadilan Negeri Jakarta Selatan")
+	ep.Formfeed()
 
 	ep.SetFontSize(1, 2)
 	ep.SetFont("A")
 	ep.Write("Jl. Ampera Raya No.133, Ragunan, Kec. Ps. Minggu,")
 	ep.Write("Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12940")
+	ep.Formfeed()
 
 	ep.SetFontSize(3, 4)
 	ep.SetFont("B")
 	ep.Write("Antrian")
+	ep.Formfeed()
 
 	ep.SetFontSize(1, 2)
 	ep.Write("Loket " + pelayanan)
+	ep.Formfeed()
 
 	ep.SetFontSize(4, 5)
 	ep.Write(noAntrian)
+	ep.Formfeed()
 
 	ep.SetFontSize(1, 2)
 	ep.Write("Tanggal " + tgl + " | Waktu: " + jam)
-
+	ep.FormfeedN(5)
 	if *doCut {
 		ep.Cut()
 	}
