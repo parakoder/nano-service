@@ -152,21 +152,23 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 
 }
 
+var (
+	lpDev = flag.String("p", os.Getenv("PRINTER_ADDRESSS"), "Printer dev file")
+	// imgPath   = flag.String("i", "/home/septiansah/Pictures/Screenshot from 2021-07-22 15-49-25.png", "Input image")
+	// threshold = flag.Float64("t", 0.5, "Black/white threshold")
+	align = flag.String("a", "center", "Alignment (left, center, right)")
+	doCut = flag.Bool("c", false, "Cut after print")
+	// maxWidth  = flag.Int("printer-max-width", 512, "Printer max width in pixels")
+)
+
 func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
-	var (
-		lpDev = flag.String("p", os.Getenv("PRINTER_ADDRESSS"), "Printer dev file")
-		// imgPath   = flag.String("i", "/home/septiansah/Pictures/Screenshot from 2021-07-22 15-49-25.png", "Input image")
-		// threshold = flag.Float64("t", 0.5, "Black/white threshold")
-		align = flag.String("a", "center", "Alignment (left, center, right)")
-		doCut = flag.Bool("c", false, "Cut after print")
-		// maxWidth  = flag.Int("printer-max-width", 512, "Printer max width in pixels")
-	)
+	
 
 	flag.Parse()
 
 	f, err := os.OpenFile(*lpDev, os.O_WRONLY | os.O_CREATE, 0644)
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 
 	defer f.Close()
