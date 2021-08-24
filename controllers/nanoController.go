@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"flag"
+	"fmt"
 	"log"
 	"nano-service/config"
 	handler "nano-service/handlers"
@@ -152,33 +152,35 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 
 }
 
-var (
-	lpDev = flag.String("p", os.Getenv("PRINTER_ADDRESSS"), "Printer dev file")
-	// imgPath   = flag.String("i", "/home/septiansah/Pictures/Screenshot from 2021-07-22 15-49-25.png", "Input image")
-	// threshold = flag.Float64("t", 0.5, "Black/white threshold")
-	align = flag.String("a", "center", "Alignment (left, center, right)")
-	doCut = flag.Bool("c", false, "Cut after print")
-	// maxWidth  = flag.Int("printer-max-width", 512, "Printer max width in pixels")
-)
+// var (
+// 	lpDev = flag.String("p", os.Getenv("PRINTER_ADDRESSS"), "Printer dev file")
+// 	// imgPath   = flag.String("i", "/home/septiansah/Pictures/Screenshot from 2021-07-22 15-49-25.png", "Input image")
+// 	// threshold = flag.Float64("t", 0.5, "Black/white threshold")
+// 	align = flag.String("a", "center", "Alignment (left, center, right)")
+// 	doCut = flag.Bool("c", false, "Cut after print")
+// 	// maxWidth  = flag.Int("printer-max-width", 512, "Printer max width in pixels")
+// )
 
 func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 	
 
-	flag.Parse()
-
-	f, err := os.OpenFile(*lpDev, os.O_WRONLY | os.O_CREATE, 0644)
+	// flag.Parse()
+	// log.Println("INI PAtH ", *lpDev)
+	f, err := os.OpenFile(os.Getenv("PRINTER_ADDRESSS"), os.O_RDWR, 0)
 	if err != nil {
-		// log.Fatal(err)
+		fmt.Println(err)
 	}
 
 	defer f.Close()
-	log.Print(*lpDev, " open.")
+	// log.Print(*lpDev, " open.")
 
 	ep := escpos.New(f)
 
 	ep.Init()
 
-	ep.SetAlign(*align)
+	// ep.SetAlign(*align)
+
+	ep.SetAlign("center")
 
 	ep.SetSmooth(1)
 	ep.SetFontSize(2, 3)
@@ -208,9 +210,9 @@ func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 	ep.SetFontSize(1, 2)
 	ep.Write("Tanggal " + tgl + " | Waktu: " + jam)
 	ep.FormfeedN(5)
-	if *doCut {
+	// if *doCut {
 		ep.Cut()
-	}
+	// }
 	ep.End()
 }
 
