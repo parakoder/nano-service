@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
+	"image"
 	"log"
 	"nano-service/config"
 	handler "nano-service/handlers"
@@ -12,8 +14,13 @@ import (
 	"os"
 	"strconv"
 
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
+
 	"github.com/gin-gonic/gin"
 	"github.com/knq/escpos"
+	"github.com/knq/escpos/raster"
 )
 
 type NanoRepo struct {
@@ -152,67 +159,85 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 
 }
 
-// var (
-// 	lpDev = flag.String("p", os.Getenv("PRINTER_ADDRESSS"), "Printer dev file")
-// 	// imgPath   = flag.String("i", "/home/septiansah/Pictures/Screenshot from 2021-07-22 15-49-25.png", "Input image")
-// 	// threshold = flag.Float64("t", 0.5, "Black/white threshold")
-// 	align = flag.String("a", "center", "Alignment (left, center, right)")
-// 	doCut = flag.Bool("c", false, "Cut after print")
-// 	// maxWidth  = flag.Int("printer-max-width", 512, "Printer max width in pixels")
-// )
+var (
+	// lpDev     = flag.String("p", , "Printer dev file")
+	imgPath   = flag.String("i", "./assets/img_logo.png", "Input image")
+	threshold = flag.Float64("t", 0.5, "Black/white threshold")
+	align     = flag.String("a", "center", "Alignment (left, center, right)")
+	doCut     = flag.Bool("c", false, "Cut after print")
+	maxWidth  = flag.Int("printer-max-width", 512, "Printer max width in pixels")
+)
 
 func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 	
 
-	// flag.Parse()
+	flag.Parse()
+
+	imgFile, err := os.Open(*imgPath)
+	if err != nil {
+		log.Println("tes")
+		log.Fatal(err)
+	}
+
+	img, imgFormat, err := image.Decode(imgFile)
+	imgFile.Close()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	log.Print("Loaded image, format: ", imgFormat)
 	// log.Println("INI PAtH ", *lpDev)
 	f, err := os.OpenFile(os.Getenv("PRINTER_ADDRESSS"), os.O_RDWR, 0)
 	if err != nil {
 		fmt.Println(err)
 	}
-
 	defer f.Close()
-	// log.Print(*lpDev, " open.")
 
 	ep := escpos.New(f)
 
 	ep.Init()
 
-	// ep.SetAlign(*align)
-
 	ep.SetAlign("center")
 
+	rasterConv := &raster.Converter{
+		MaxWidth:  *maxWidth,
+		Threshold: *threshold,
+	}
+
+	rasterConv.Print(img, ep)
+	ep.Formfeed()
+	ep.Formfeed()
+
 	ep.SetSmooth(1)
-	ep.SetFontSize(2, 3)
+	ep.SetFontSize(1, 2)
 	ep.SetFont("A")
 	ep.Write("Pengadilan Negeri Jakarta Selatan")
 	ep.Formfeed()
 
-	ep.SetFontSize(1, 2)
-	ep.SetFont("A")
-	ep.Write("Jl. Ampera Raya No.133, Ragunan, Kec. Ps. Minggu,")
-	ep.Write("Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12940")
-	ep.Formfeed()
-
-	ep.SetFontSize(3, 4)
+	ep.SetFontSize(2, 3)
 	ep.SetFont("B")
 	ep.Write("Antrian")
+	ep.Write("  ")
 	ep.Formfeed()
 
 	ep.SetFontSize(1, 2)
 	ep.Write("Loket " + pelayanan)
+	ep.Write("  ")
+	ep.Formfeed()
 	ep.Formfeed()
 
 	ep.SetFontSize(4, 5)
 	ep.Write(noAntrian)
+	ep.Write("  ")
+	ep.Formfeed()
 	ep.Formfeed()
 
 	ep.SetFontSize(1, 2)
 	ep.Write("Tanggal " + tgl + " | Waktu: " + jam)
-	ep.FormfeedN(5)
-	// if *doCut {
+	ep.FormfeedN(3)
+	if *doCut {
 		ep.Cut()
-	// }
+	}
 	ep.End()
 }
 
