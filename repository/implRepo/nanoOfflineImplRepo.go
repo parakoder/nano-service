@@ -262,6 +262,10 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "B ", i)
+		} else if jk == 7 {
+			jamKD := 25
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "B ", i)
 		}
 		// noAtrian = fmt.Sprintf("%s%d", "B", jamK +1)
 
@@ -291,6 +295,10 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "C ", i)
 		} else if jk == 6 {
+			jamKD := 25
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "C ", i)
+		} else if jk == 7 {
 			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "C ", i)
@@ -327,6 +335,10 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "D ", i)
+		} else if jk == 7 {
+			jamKD := 25
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "D ", i)
 		}
 
 	case 5:
@@ -355,6 +367,10 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "E ", i)
 		} else if jk == 6 {
+			jamKD := 25
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "E ", i)
+		} else if jk == 7 {
 			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "E ", i)
@@ -389,6 +405,10 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "F ", i)
+		} else if jk == 7 {
+			jamKD := 25
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "F ", i)
 		}
 
 	case 7:
@@ -417,6 +437,10 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "G ", i)
 		} else if jk == 6 {
+			jamKD := 25
+			i := jamKD + jamK + 1
+			noAtrian = fmt.Sprintf("%s%d", "G ", i)
+		} else if jk == 7 {
 			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "G ", i)
