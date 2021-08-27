@@ -158,7 +158,7 @@ func (n *NanoRepo) CekAntrian(c *gin.Context) {
 
 func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 
-	// log.Println("INI PAtH ", *lpDev)
+	log.Println("INI PAtH ", noAntrian)
 	f, err := os.OpenFile(os.Getenv("PRINTER_ADDRESSS"), os.O_RDWR, 0)
 	if err != nil {
 		fmt.Println(err)
