@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"image"
 	"log"
 	"nano-service/config"
 	handler "nano-service/handlers"
@@ -20,7 +19,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/knq/escpos"
-	"github.com/knq/escpos/raster"
 )
 
 type NanoRepo struct {
@@ -218,50 +216,50 @@ var (
 	maxWidth  = flag.Int("printer-max-width", 512, "Printer max width in pixels")
 )
 
-func PrintTicket() {
-	flag.Parse()
+// func PrintTicket() {
+// 	flag.Parse()
 
-	imgFile, err := os.Open(*imgPath)
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	imgFile, err := os.Open(*imgPath)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	img, imgFormat, err := image.Decode(imgFile)
-	imgFile.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	img, imgFormat, err := image.Decode(imgFile)
+// 	imgFile.Close()
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	log.Print("Loaded image, format: ", imgFormat)
+// 	log.Print("Loaded image, format: ", imgFormat)
 
-	// ----------------------------------------------------------------------
+// 	// ----------------------------------------------------------------------
 
-	f, err := os.OpenFile(os.Getenv("PRINTER_ADDRESSS"), os.O_RDWR, 0)
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	f, err := os.OpenFile(os.Getenv("PRINTER_ADDRESSS"), os.O_RDWR, 0)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	defer f.Close()
-	// log.Print(*lpDev, " open.")
+// 	defer f.Close()
+// 	// log.Print(*lpDev, " open.")
 
-	ep := escpos.New(f)
+// 	ep := escpos.New(f)
 
-	ep.Init()
+// 	ep.Init()
 
-	ep.SetAlign(*align)
+// 	ep.SetAlign(*align)
 
-	rasterConv := &raster.Converter{
-		MaxWidth:  *maxWidth,
-		Threshold: *threshold,
-	}
+// 	rasterConv := &raster.Converter{
+// 		MaxWidth:  *maxWidth,
+// 		Threshold: *threshold,
+// 	}
 
-	rasterConv.Print(img, ep)
+// 	rasterConv.Print(img, ep)
 
-	if *doCut {
-		ep.Cut()
-	}
-	ep.End()
-}
+// 	if *doCut {
+// 		ep.Cut()
+// 	}
+// 	ep.End()
+// }
 
 // func PrintTicket(noAntrian, pelayanan, tgl, jam string) {
 
