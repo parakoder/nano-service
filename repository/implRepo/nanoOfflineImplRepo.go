@@ -24,57 +24,40 @@ func getJamKedatanganID() int {
 	datesParse, _ := time.Parse(layoutJam, dates)
 
 	// ======================== jam ke 1 ========================
-	start1 := "08:00"
+	start1 := "09:00"
 	startParse1, _ := time.Parse(layoutJam, start1)
 
-	end1 := "09:00"
+	end1 := "10:00"
 	endParse1, _ := time.Parse(layoutJam, end1)
 
 	jam1 := inTimeSpan(startParse1, endParse1, datesParse)
 
 	// ======================== jam ke 2 ========================
-	start2 := "09:00"
+	start2 := "10:00"
 	startParse2, _ := time.Parse(layoutJam, start2)
 
-	end2 := "10:00"
+	end2 := "11:00"
 	endParse2, _ := time.Parse(layoutJam, end2)
 
 	jam2 := inTimeSpan(startParse2, endParse2, datesParse)
 
 	// ======================== jam ke 3 ========================
-	start3 := "10:00"
+	start3 := "11:00"
 	startParse3, _ := time.Parse(layoutJam, start3)
 
-	end3 := "11:00"
+	end3 := "12:00"
 	endParse3, _ := time.Parse(layoutJam, end3)
 
 	jam3 := inTimeSpan(startParse3, endParse3, datesParse)
 
 	// ======================== jam ke 4 ========================
-	start4 := "11:00"
+	start4 := "13:00"
 	startParse4, _ := time.Parse(layoutJam, start4)
 
-	end4 := "12:00"
+	end4 := "14:00"
 	endParse4, _ := time.Parse(layoutJam, end4)
 
 	jam4 := inTimeSpan(startParse4, endParse4, datesParse)
-
-	// ======================== jam ke 5 ========================
-	start5 := "13:00"
-	startParse5, _ := time.Parse(layoutJam, start5)
-
-	end5 := "14:00"
-	endParse5, _ := time.Parse(layoutJam, end5)
-
-	jam5 := inTimeSpan(startParse5, endParse5, datesParse)
-
-	// ======================== jam ke 6 ========================
-	start6 := "14:00"
-	startParse6, _ := time.Parse(layoutJam, start6)
-
-	end6 := "15:00"
-	endParse6, _ := time.Parse(layoutJam, end6)
-	jam6 := inTimeSpan(startParse6, endParse6, datesParse)
 
 	start7 := "15:00"
 	startParse7, _ := time.Parse(layoutJam, start7)
@@ -92,10 +75,6 @@ func getJamKedatanganID() int {
 		idJam = 3
 	} else if jam4 == true {
 		idJam = 4
-	} else if jam5 == true {
-		idJam = 5
-	} else if jam6 == true {
-		idJam = 6
 	} else if jam7 == true {
 		idJam = 7
 	}
@@ -217,14 +196,6 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			jamKD := 15
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "A ", i)
-		} else if jk == 5 {
-			jamKD := 20
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "A ", i)
-		} else if jk == 6 {
-			jamKD := 25
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "A ", i)
 		} else if jk == 7 {
 			jamKD := 25
 			i := jamKD + jamK + 1
@@ -254,14 +225,6 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			jamKD := 15
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "B ", i)
-		} else if jk == 5 {
-			jamKD := 20
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "B ", i)
-		} else if jk == 6 {
-			jamKD := 25
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "B ", i)
 		} else if jk == 7 {
 			jamKD := 25
 			i := jamKD + jamK + 1
@@ -288,14 +251,6 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			noAtrian = fmt.Sprintf("%s%d", "C ", i)
 		} else if jk == 4 {
 			jamKD := 15
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "C ", i)
-		} else if jk == 5 {
-			jamKD := 20
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "C ", i)
-		} else if jk == 6 {
-			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "C ", i)
 		} else if jk == 7 {
@@ -327,14 +282,6 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			jamKD := 15
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "D ", i)
-		} else if jk == 5 {
-			jamKD := 20
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "D ", i)
-		} else if jk == 6 {
-			jamKD := 25
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "D ", i)
 		} else if jk == 7 {
 			jamKD := 25
 			i := jamKD + jamK + 1
@@ -360,14 +307,6 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			noAtrian = fmt.Sprintf("%s%d", "E ", i)
 		} else if jk == 4 {
 			jamKD := 15
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "E ", i)
-		} else if jk == 5 {
-			jamKD := 20
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "E ", i)
-		} else if jk == 6 {
-			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "E ", i)
 		} else if jk == 7 {
@@ -397,14 +336,6 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			jamKD := 15
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "F ", i)
-		} else if jk == 5 {
-			jamKD := 20
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "F ", i)
-		} else if jk == 6 {
-			jamKD := 25
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "F ", i)
 		} else if jk == 7 {
 			jamKD := 25
 			i := jamKD + jamK + 1
@@ -430,14 +361,6 @@ func (m *mySQLNano) GenerateNoAntrianOffline(idp int, tgl_kedatangan string, jk 
 			noAtrian = fmt.Sprintf("%s%d", "G ", i)
 		} else if jk == 4 {
 			jamKD := 15
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "G ", i)
-		} else if jk == 5 {
-			jamKD := 20
-			i := jamKD + jamK + 1
-			noAtrian = fmt.Sprintf("%s%d", "G ", i)
-		} else if jk == 6 {
-			jamKD := 25
 			i := jamKD + jamK + 1
 			noAtrian = fmt.Sprintf("%s%d", "G ", i)
 		} else if jk == 7 {
